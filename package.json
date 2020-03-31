@@ -1,0 +1,25 @@
+{
+  "name": "autonomous-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asyncart/autonomous-scripts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asyncart/autonomous-scripts/issues"
+  },
+  "homepage": "https://github.com/asyncart/autonomous-scripts#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "ethers": "^4.0.46",
+    "moment-timezone": "^0.5.28",
+    "tz-lookup": "^6.1.25"
+  }
+}
