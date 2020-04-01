@@ -53,17 +53,15 @@ async function update() {
 
 	console.log("Is Day = " + isDay);
 
-	var layerIds = [84]; // To control the day / night cycle of the painting we control "Day / Night base" on behalf of the owner
+	var leverIds = [0]; // To control the day / night cycle of the painting we control "Day / Night base" on behalf of the owner
 	// https://async.art/art/layer/0x6c424c25e9f1fff9642cb5b7750b0db7312c29ad-84
 
 	var newLayerValues = [isDay ? 0 : 1]; // Value 0 = Day, 1 = Night
 
 	return {
-		layerIds : layerIds,
+		leverIds : leverIds,
 		layerValues : newLayerValues
 	}
 }
 
 exports.update = update
-
-update();
