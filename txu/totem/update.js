@@ -1,9 +1,9 @@
 function update() {
-	var layerIds = [];
+	var leverIds = [];
 	var newLayerValues = [];
 
 	// Layer Ids
-	layerIds.push(0); // Ground
+	leverIds.push(0); // Ground
 	layerIds.push(1); // Sky
 
 	// State IDs (Ground)
@@ -40,7 +40,7 @@ function update() {
 	}
 
 	return {
-		layerIds : layerIds,
+		leverIds : leverIds,
 		layerValues : newLayerValues
 	}
 }
