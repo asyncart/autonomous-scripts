@@ -4,7 +4,7 @@ function update() {
 
 	// Layer Ids
 	leverIds.push(0); // Ground
-	layerIds.push(1); // Sky
+	leverIds.push(1); // Sky
 
 	// State IDs (Ground)
 	var groundDay = [0, 1, 2, 3]
