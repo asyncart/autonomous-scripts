@@ -51,7 +51,7 @@ function randomInt(sides) {
 	return Math.floor(Math.random() * sides);
 }
 
-async function run() {
+function update() {
 	var now = new Date(Date.now());
 
 	// optionally set timezone here and use local time if desired 
@@ -191,23 +191,10 @@ async function run() {
 	console.log(layerIds);
 	console.log(newLayerValues)
 
-	var cachePath = "cache.json"
-	let cache = JSON.parse(fs.readFileSync(cachePath));
-	var controlToken = cache[1];
-
-	for (var i = 0; i < layerIds.length; i++) {
-		var id = layerIds[i];
-		var value = newLayerValues[i];
-
-		var index = id * 3 + 2;
-		controlToken[index] = value;
+	return {
+		leverIds : leverIds,
+		layerValues : newLayerValues
 	}
-
-	// write cache file
-	let data = JSON.stringify(cache);
-	fs.writeFileSync(cachePath, data);
-
-	console.log("Randomized to " + cachePath);
 }
 
-run();
+exports.update = update
