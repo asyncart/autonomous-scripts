@@ -64,7 +64,7 @@ function update() {
 
 	console.log("Month = " + month + ", Day of Week = " + day);
 
-	var isWinter = ((month == 12) || (month == 0) || (month == 1));
+	var isWinter = ((month == 11) || (month == 0) || (month == 1));
 	console.log("IsWinter = " + isWinter);
 
 	var leverIds = [];
@@ -87,7 +87,7 @@ function update() {
 
 		// move vehicle to random X position
 		leverIds.push(VEHICLE_POSITION_X_ID);
-		newLeverValues.push(-500 + randomInt(1000));
+		newLeverValues.push(-100 + randomInt(600)); // -500 to 500
 	}
 
 	// cameras
