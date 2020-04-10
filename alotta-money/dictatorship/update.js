@@ -67,42 +67,42 @@ function update() {
 	var isWinter = ((month == 12) || (month == 0) || (month == 1));
 	console.log("IsWinter = " + isWinter);
 
-	var layerIds = [];
-	var newLayerValues = [];
+	var leverIds = [];
+	var newLeverValues = [];
 
 	// seasons
-	layerIds.push(FRAME_STATE_ID)
+	leverIds.push(FRAME_STATE_ID)
 	if (isWinter) {
-		newLayerValues.push(1); // winter frame
+		newLeverValues.push(1); // winter frame
 	} else {
-		newLayerValues.push(0); // normal frame
+		newLeverValues.push(0); // normal frame
 	}
 
 	// vehicles
-	layerIds.push(VEHICLE_STATE_ID);
+	leverIds.push(VEHICLE_STATE_ID);
 	if (isSunday) {
-		newLayerValues.push(10); // vehicles hidden on sunday
+		newLeverValues.push(10); // vehicles hidden on sunday
 	} else {
-		newLayerValues.push(randomInt(10));
+		newLeverValues.push(randomInt(10));
 
 		// move vehicle to random X position
-		layerIds.push(VEHICLE_POSITION_X_ID);
-		newLayerValues.push(-500 + randomInt(1000));
+		leverIds.push(VEHICLE_POSITION_X_ID);
+		newLeverValues.push(-500 + randomInt(1000));
 	}
 
 	// cameras
-	layerIds.push(CAMERA_STATE);
-	newLayerValues.push(randomInt(4));
+	leverIds.push(CAMERA_STATE);
+	newLeverValues.push(randomInt(4));
 
 	// windows
-	layerIds.push(SATURDAY_WINDOW_STATE_ID);
-	layerIds.push(SATURDAY_BROTHEL_STATE_ID);
+	leverIds.push(SATURDAY_WINDOW_STATE_ID);
+	leverIds.push(SATURDAY_BROTHEL_STATE_ID);
 	if (isSaturday) {
-		newLayerValues.push(0);
-		newLayerValues.push(0);		
+		newLeverValues.push(0);
+		newLeverValues.push(0);		
 	} else {
-		newLayerValues.push(1);
-		newLayerValues.push(1);
+		newLeverValues.push(1);
+		newLeverValues.push(1);
 	}
 
 	var maxWindowsOn = 3;
@@ -117,8 +117,8 @@ function update() {
 		var random = randomInt(windowIdsOff.length);
 
 		// turn on this window
-		layerIds.push(windowIdsOff[random]);
-		newLayerValues.push(0);
+		leverIds.push(windowIdsOff[random]);
+		newLeverValues.push(0);
 		
 		// splice out this window ID
 		windowIdsOff.splice(random, 1);
@@ -126,8 +126,8 @@ function update() {
 	// iterate through the rest of the remaining windows and turn them off
 	for (var i = 0; i < windowIdsOff.length; i++) {
 		// turn off window
-		layerIds.push(windowIdsOff[i]);
-		newLayerValues.push(1); // hidden	
+		leverIds.push(windowIdsOff[i]);
+		newLeverValues.push(1); // hidden	
 	}
 
 	// NPCs
@@ -144,8 +144,8 @@ function update() {
 		var random = randomInt(npcsOff.length);
 
 		// turn on this NPC
-		layerIds.push(npcsOff[random]);
-		newLayerValues.push(0);
+		leverIds.push(npcsOff[random]);
+		newLeverValues.push(0);
 		
 		// splice out this window ID
 		npcsOff.splice(random, 1);
@@ -153,48 +153,66 @@ function update() {
 	// iterate through the rest of the remaining NPCs and turn them off
 	for (var i = 0; i < npcsOff.length; i++) {
 		// turn off NPC
-		layerIds.push(npcsOff[i]);
-		newLayerValues.push(1); // hidden	
+		leverIds.push(npcsOff[i]);
+		newLeverValues.push(1); // hidden	
 	}
 
 	// Sky
-	layerIds.push(SKY_STATE_ID);
-	newLayerValues.push(randomInt(5)); // random sky state
+	leverIds.push(SKY_STATE_ID);
+	newLeverValues.push(randomInt(5)); // random sky state
 
-	layerIds.push(SKY_POSITION_X_ID);
-	newLayerValues.push(-700 + randomInt(1500)); // random sky position
+	leverIds.push(SKY_POSITION_X_ID);
+	newLeverValues.push(-700 + randomInt(1500)); // random sky position
 
 	// Poster
-	layerIds.push(POSTER_STATE_ID);
-	newLayerValues.push(month);
+	leverIds.push(POSTER_STATE_ID);
+	newLeverValues.push(month);
 
 	// Drug Bus State
 	// Drug Bus only visible on Sundays
-	layerIds.push(DRUG_BUS_VISIBLE_ID)
+	leverIds.push(DRUG_BUS_VISIBLE_ID)
 	if (isSunday) {
-		newLayerValues.push(0);
+		newLeverValues.push(0);
 
-		layerIds.push(DRUG_BUS_POSITION_X);
-		newLayerValues.push(-700 + randomInt(1300));
+		leverIds.push(DRUG_BUS_POSITION_X);
+		newLeverValues.push(-700 + randomInt(1300));
 
 		// show dealer
-		layerIds.push(DRUG_DEALER_STATE_ID);
-		newLayerValues.push(0);
+		leverIds.push(DRUG_DEALER_STATE_ID);
+		newLeverValues.push(0);
 	} else {
-		newLayerValues.push(1);
+		newLeverValues.push(1);
 
 		// hide dealer
-		layerIds.push(DRUG_DEALER_STATE_ID);
-		newLayerValues.push(1);
+		leverIds.push(DRUG_DEALER_STATE_ID);
+		newLeverValues.push(1);
 	}
 
-	console.log(layerIds);
-	console.log(newLayerValues)
+	console.log(leverIds);
+	console.log(newLeverValues)
 
 	return {
 		leverIds : leverIds,
-		layerValues : newLayerValues
+		leverValues : newLeverValues
 	}
 }
 
 exports.update = update
+
+// var cachePath = "cache.json"
+// let cache = JSON.parse(fs.readFileSync(cachePath));
+// var controlToken = cache[1];
+
+// for (var i = 0; i < leverIds.length; i++) {
+// 	var id = leverIds[i];
+// 	var value = newLeverValues[i];
+
+// 	var index = id * 3 + 2;
+// 	controlToken[index] = value;
+// }
+
+// // write cache file
+// let data = JSON.stringify(cache);
+// fs.writeFileSync(cachePath, data);
+
+// console.log("Randomized to " + cachePath);
