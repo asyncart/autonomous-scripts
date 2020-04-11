@@ -186,5 +186,4 @@ async function update() {
 	}
 }
 
-// exports.update = update
-update();
+exports.update = update
