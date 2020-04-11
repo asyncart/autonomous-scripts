@@ -66,8 +66,10 @@ async function getHistoricalHourlyBTCPrices() {
 	return btcPricesPerHourAscending;
 }
 
-async function run() {
+async function update() {
 	var btcPricesPerHourAscending = await getHistoricalHourlyBTCPrices();
+
+	console.log("BTC Prices = " + btcPricesPerHourAscending)
 
 	var gain = (btcPricesPerHourAscending[0] < btcPricesPerHourAscending[btcPricesPerHourAscending.length - 1])
 	var min = Math.min(...btcPricesPerHourAscending);
@@ -75,17 +77,6 @@ async function run() {
 	var diff = max-min;
 
 	var percentChange = diff/max;
-
-	var achievementUnlocked = false;
-
-	if (gain) {
-		// Determine if any achievements were unlocked TODO
-			
-		// if no achievements
-		if (achievementUnlocked == false) {
-			// Determine if any markers were passed TODO
-		}
-	}
 
 	console.log("Percent change = " + percentChange + " %")
 	console.log("Gain = " + gain)
@@ -100,7 +91,6 @@ async function run() {
 	var rotLow = 0;
 	var rotHigh = 359;
 
-	var layerValues = [];
 	var numLayers = 24;
 
 	// for mini image
@@ -111,9 +101,9 @@ async function run() {
 
 	var layerCache = [];
 
-	var layerId = 0;
-	var layerIds = [];
-	var newLayerValues = [];
+	var curLeverId = 0;
+	var leverIds = [];
+	var newLeverValues = [];
 
 	for (var i = 0; i < numLayers; i++) {
 		var priceRange = hourlyRange(btcPricesPerHourAscending, diff, i, i+1);
@@ -149,15 +139,15 @@ async function run() {
 
 		var layer = [scale, angle, x, y]
 
-		layerIds.push(layerId++);
-		layerIds.push(layerId++);
-		layerIds.push(layerId++);
-		layerIds.push(layerId++);
+		leverIds.push(curLeverId++);
+		leverIds.push(curLeverId++);
+		leverIds.push(curLeverId++);
+		leverIds.push(curLeverId++);
 
-		newLayerValues.push(scale);
-		newLayerValues.push(angle);
-		newLayerValues.push(x);
-		newLayerValues.push(y);
+		newLeverValues.push(scale);
+		newLeverValues.push(angle);
+		newLeverValues.push(x);
+		newLeverValues.push(y);
 
 		// layerCache.push(0);layerCache.push(0);layerCache.push(scale)
 		// layerCache.push(0);layerCache.push(0);layerCache.push(angle)
@@ -165,20 +155,36 @@ async function run() {
 		// layerCache.push(0);layerCache.push(0);layerCache.push(y)
 	}
 
+	var achievementUnlocked = false;
+
+	if (gain) {
+		// Determine if any achievements were unlocked TODO
+			
+		// if no achievements
+		if (achievementUnlocked == false) {
+			// Determine if any markers were passed TODO
+		}
+	}
 
 	// Fill in achievement ID TODO
 
 	// Fill in markers
-	// layerCache.push(0);layerCache.push(0);layerCache.push(14)
-	// layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	// layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	// layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	// layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	// layerCache.push(0);layerCache.push(0);layerCache.push(13)
+	layerCache.push(0);layerCache.push(0);layerCache.push(14)
+	layerCache.push(0);layerCache.push(0);layerCache.push(13)
+	layerCache.push(0);layerCache.push(0);layerCache.push(13)
+	layerCache.push(0);layerCache.push(0);layerCache.push(13)
+	layerCache.push(0);layerCache.push(0);layerCache.push(13)
+	layerCache.push(0);layerCache.push(0);layerCache.push(13)
 
 	// console.log(JSON.stringify(layerCache))
-	console.log(layerIds);
-	console.log(newLayerValues)
+	console.log(leverIds);
+	console.log(newLeverValues)
+
+	return {
+		leverIds : leverIds,
+		leverValues : newLeverValues
+	}
 }
 
-run();
+// exports.update = update
+update();
