@@ -93,11 +93,8 @@ async function update() {
 
 	var numLayers = 24;
 
-	// for mini image
-	// var positionXSensitivity = 192; // half width
-	// var positionYSensitivity = 108; // half height
-	var positionXSensitivity = 1920; // half width
-	var positionYSensitivity = 1080; // half height
+	var positionXSensitivity = 1017; // half width
+	var positionYSensitivity = 572; // half height
 
 	var layerCache = [];
 
