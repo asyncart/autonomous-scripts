@@ -18,6 +18,7 @@
   "homepage": "https://github.com/asyncart/autonomous-scripts#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "csv-parse": "^4.8.8",
     "ethers": "^4.0.46",
     "moment-timezone": "^0.5.28",
     "tz-lookup": "^6.1.25"
