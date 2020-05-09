@@ -78,14 +78,15 @@ async function update() {
 
 	var percentChange = diff/max;
 
+
 	console.log("Percent change = " + percentChange + " %")
 	console.log("Gain = " + gain)
 	console.log("Min = " + min);
 	console.log("Max = " + max)
 	console.log("Diff = " + diff)
 
-	var scaleLow = 180;
-	var scaleHigh = 500;
+	var scaleLow = 180; //1 - 6
+	var scaleHigh = 1080; //MKANE - should this be 1080? (180 x 6) - previously 500
 	var scaleSensitivity = 100;
 
 	var rotLow = 0;
@@ -93,14 +94,17 @@ async function update() {
 
 	var numLayers = 24;
 
-	var positionXSensitivity = 1017; // half width
-	var positionYSensitivity = 572; // half height
+	var positionXSensitivity = 1024; // half width           2048x1152
+	var positionYSensitivity = 576; // half height
 
 	var layerCache = [];
 
 	var curLeverId = 0;
 	var leverIds = [];
 	var newLeverValues = [];
+	
+	var rotationSensitivity = 1;
+	var priceDataMult = percentChange*10;
 
 	for (var i = 0; i < numLayers; i++) {
 		var priceRange = hourlyRange(btcPricesPerHourAscending, diff, i, i+1);
@@ -116,7 +120,12 @@ async function update() {
 		scale = Math.round(scale)
 
 		// Rotation
-		var angle = mapValue(priceRange[2], -diff, diff, -359, 359)
+		//var angle = mapValue(priceRange[2], -diff, diff, -359, 359)
+		//begin MKANE
+		var angle = mapValue(priceRange[2], -diff, diff, -359, 359) * (priceDataMult * rotationSensitivity);
+		angle = angle % 360; //MKANE - would modulo work effectively here to allow for multiplication in original algorithm-- but then normalize what the angle actually would be 
+		//end MKANE
+		
 		angle = Math.round(angle)
 		if (diff == 0) {
 			angle = 0;
@@ -126,12 +135,15 @@ async function update() {
 			angle += 360;
 		}
 
+
+
 		// Position X
-		var x = percentChange * positionXSensitivity * priceRange[3];
+		//MKANE - percentChange should be priceDataMult ? the difference is a power of 10-- so maybe or should it be x 100?
+		var x = priceDataMult * positionXSensitivity * priceRange[3];
 		x = Math.round(x);
 
 		// Position Y
-		var y = percentChange * positionYSensitivity * priceRange[3];
+		var y = priceDataMult * positionYSensitivity * priceRange[3];
 		y = Math.round(y);
 
 		var layer = [scale, angle, x, y]
