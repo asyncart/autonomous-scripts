@@ -36,12 +36,7 @@ async function update(providerURL, contractAddress) {
 
 	console.log("Timezone = " + timezone)
 
-	// Find the timezone for this lat long
-	var timezone = tzlookup(latitude, longitude)
-
 	var tzMoment = moment().tz(timezone);
-
-	console.log("Timezone = " + timezone)
 
 	console.log("Locale Time = " + tzMoment.format());
 
