@@ -41,9 +41,7 @@ function hourlyRange(data, totalDiff, index0, index1) {
 async function getHistoricalHourlyBTCPrices() {
 	
 	//crash data
-	//return [7676,7599,7473,7423,7373,6758,6152,6009,5910,6050,6050,6111,6173,6030,6020,5850,5734,5792,5273,4752,4370,4611,5255,5099,5065];
-	
-	return [7676,7599,7473,7423,7373,6758,6152,6009,5910,6050,6050,6111,6173,6030,6020,5850,5734,5792,5273,4752,4370,4611,5255,5099,9065];
+	return [7676,7599,7473,7423,7373,6758,6152,6009,5910,6050,6050,6111,6173,6030,6020,5850,5734,5792,5273,4752,4370,4611,5255,5099,5065];
 	
 	
 	//crash data over 9k
@@ -294,13 +292,14 @@ async function update() {
 		console.log(btcPricesPerHourAscending[0]);
 		console.log(btcPricesPerHourAscending[lastVal]);
 		
-		for(var i=0;i<achievement_gain.length;i++){
+		for(var i=achievement_gain.length-1;i>=0;i--){
 			
 			if(btcPricesPerHourAscending[0] < achievement_gain[i] && btcPricesPerHourAscending[lastVal] >= achievement_gain[i]){
 				achievementUnlocked = true;
 				
 				leverIds.push(LEVER_ID_ACHIEVEMENT);
 				newLeverValues.push(achievement_code[i]);
+				break;
 			}
 			
 		}
