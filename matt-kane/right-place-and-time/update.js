@@ -345,13 +345,14 @@ async function update() {
 		
 		//check values 
 		if(achievement_vals){
-			for(var i=0;i<achievement_vals.length;i++){
+			for(var i=achievement_vals.length-1;i>=0;i--){
 
 				if(checkNumberAchievement(btcPricesPerHourAscending[0], btcPricesPerHourAscending[lastVal], achievement_vals[i], multiple) == true){
 					
 					var str = "$" + achievement_vals[i] + letter;
 					setNumberAchievement(leverIds, newLeverValues, str);
 					achievementUnlocked = true;
+					break;
 					
 				}
 				
