@@ -1,6 +1,8 @@
 const axios = require('axios');
 var fs = require('fs')
 
+const LEVER_ID_ACHIEVEMENT = 96;
+
 // Re-maps a number from one range to another.
 function mapValue(value, start1, stop1, start2, stop2) {
 	// 75, 50, 100
@@ -289,39 +291,30 @@ async function update() {
 			
 			if(btcPricesPerHourAscending[0] < achievement_gain[i] && btcPricesPerHourAscending[lastVal] >= achievement_gain[i]){
 				achievementUnlocked = true;
-				leverIds.push(curLeverId++);
-				leverIds.push(curLeverId++);
-				leverIds.push(curLeverId++);
-				newLeverValues.push(0);
-				newLeverValues.push(achievement_max);
+				
+				leverIds.push(LEVER_ID_ACHIEVEMENT);
 				newLeverValues.push(achievement_code[i]);
 			}
 			
 		}
-	}
-	else{
-		
+	} else {		
+		console.log("Checking for drop achievement.")
+		// if the percent change was greater or equal to 20%
 		if(percentChange >= .2){
+			console.log("Drop achieved!");
+			
 			achievementUnlocked = true;
-			leverIds.push(curLeverId++);
-			leverIds.push(curLeverId++);
-			leverIds.push(curLeverId++);
-			newLeverValues.push(0);
-			newLeverValues.push(achievement_max);
+
+			leverIds.push(LEVER_ID_ACHIEVEMENT);
 			newLeverValues.push(achievement_drop);
-		}
-		
+		}		
 	}
 		
 	// if no achievements
 	if (gain == true && achievementUnlocked == false) {
 		
 		// set achievement as hidden
-		leverIds.push(curLeverId++);
-		leverIds.push(curLeverId++);
-		leverIds.push(curLeverId++);
-		newLeverValues.push(0);
-		newLeverValues.push(achievement_max);
+		leverIds.push(LEVER_ID_ACHIEVEMENT);
 		newLeverValues.push(achievement_hidden);
 		
 	
