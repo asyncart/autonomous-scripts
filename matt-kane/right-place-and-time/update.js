@@ -41,7 +41,7 @@ function hourlyRange(data, totalDiff, index0, index1) {
 async function getHistoricalHourlyBTCPrices() {
 	
 	//crash data
-	return [7676,7599,7473,7423,7373,6758,6152,6009,5910,6050,6050,6111,6173,6030,6020,5850,5734,5792,5273,4752,4370,4611,5255,5099,5065];
+	// return [7676,7599,7473,7423,7373,6758,6152,6009,5910,6050,6050,6111,6173,6030,6020,5850,5734,5792,5273,4752,4370,4611,5255,5099,5065];
 	
 	
 	//return [6676,7599,7473,7423,7373,7758,7152,7009,7910,7050,7050,7111,7173,7030,7020,7850,7734,7792,7273,7752,7370,7611,7255,7099,7065];
@@ -57,7 +57,7 @@ async function getHistoricalHourlyBTCPrices() {
 	//no change
 	//return  [5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204,5204];
 	
-	/*var url = "https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=USD&limit=25"
+	var url = "https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=USD&limit=25"
 	
 	url += "&api_key" + process.env.CRYPTOCOMPARE_API_BTC_KEY
 
@@ -88,7 +88,7 @@ async function getHistoricalHourlyBTCPrices() {
 	// btcPricesPerHourAscending = [5204,5228,5252,5252,5240,5252,5201,5369,5314,5307,5307,5301,5307,5295,5301,5246,5265,5438,5375,5283,5252,5301,5301,5259,5204]
 	// btcPricesPerHourAscending = [8741,8742,8744,8743,8741,8739,8744,8741,8741,8743,8744,8745,8747,8740,8738,8741,8743,8741,8743,8741,8743,8747, 8800, 8790, 8812, 8814, 8807, 8809]	
 	
-	return btcPricesPerHourAscending;*/
+	return btcPricesPerHourAscending;
 }
 
 
@@ -263,8 +263,6 @@ async function update() {
 	var positionXSensitivity = 1024; // half width   2048x1152
 	var positionYSensitivity = 576; // half height
 
-	var layerCache = [];
-
 	var curLeverId = 0;
 	var leverIds = [];
 	var newLeverValues = [];
@@ -311,17 +309,12 @@ async function update() {
 		newLeverValues.push(angle);
 		newLeverValues.push(x);
 		newLeverValues.push(y);
-
-		 //layerCache.push(0);layerCache.push(0);layerCache.push(scale)
-		 //layerCache.push(0);layerCache.push(0);layerCache.push(angle)
-		 //layerCache.push(0);layerCache.push(0);layerCache.push(x)
-		 //layerCache.push(0);layerCache.push(0);layerCache.push(y)
 	}
 
 	var achievementUnlocked = false;
 
 	if (gain) {
-		// Determine if any achievements were unlocked TODO
+		// Determine if any achievements were unlocked
 		var lastVal = btcPricesPerHourAscending.length - 1;
 		
 		console.log("CHECKING");
@@ -420,21 +413,10 @@ async function update() {
 
 	//console.log(mapValue(2,0,10,0,1));
 
-	// Fill in achievement ID TODO
-
-	// Fill in markers
-	/*layerCache.push(0);layerCache.push(0);layerCache.push(14)
-	layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	layerCache.push(0);layerCache.push(0);layerCache.push(13)
-	layerCache.push(0);layerCache.push(0);layerCache.push(13)*/
-
-	// console.log(JSON.stringify(layerCache))
 	console.log(leverIds);
 	console.log(newLeverValues)
 
-	fs.writeFileSync("values.json", JSON.stringify(newLeverValues));
+	// fs.writeFileSync("values.json", JSON.stringify(newLeverValues));
 
 	return {
 		leverIds : leverIds,
@@ -442,7 +424,4 @@ async function update() {
 	}
 }
 
-
-
-update();
-//exports.update = update
+exports.update = update
