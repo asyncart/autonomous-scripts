@@ -59,7 +59,7 @@ async function getHistoricalHourlyBTCPrices() {
 	
 	/*var url = "https://min-api.cryptocompare.com/data/v2/histohour?fsym=BTC&tsym=USD&limit=25"
 	
-	url += "&api_key" + process.env.CRYPTOCOMPARE_API_KEY
+	url += "&api_key" + process.env.CRYPTOCOMPARE_API_BTC_KEY
 
 	var btcData = null;
 	try {
