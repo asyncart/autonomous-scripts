@@ -44,6 +44,9 @@ async function getHistoricalHourlyBTCPrices() {
 	return [7676,7599,7473,7423,7373,6758,6152,6009,5910,6050,6050,6111,6173,6030,6020,5850,5734,5792,5273,4752,4370,4611,5255,5099,5065];
 	
 	
+	//return [6676,7599,7473,7423,7373,7758,7152,7009,7910,7050,7050,7111,7173,7030,7020,7850,7734,7792,7273,7752,7370,7611,7255,7099,7065];
+	
+	
 	//crash data over 9k
 	//crash data
 	//return [7676,7599,7473,7423,7373,6758,6152,6009,5910,6050,6050,6111,6173,6030,6020,5850,5734,5792,5273,4752,4370,4611,5255,5099,9265];
@@ -157,18 +160,51 @@ function getNumberCode(num){
 
 function setNumberAchievement(leverIds, newLeverValues, str){
 	
-	var number_max = 12;
-	
 	const chars = str.split('');
+	
+	/*
+	returns spaces 
+	_$2__
+	_$2K_
+	_$20K
+	$200K
+	
+	*/
+	
+	var count = 0;
+	//add empty spaces
+	if(chars.length<5){
+		var code = getNumberCode(" ");
+		leverIds.push( (LEVER_ID_NUM_0 + count) );  
+		newLeverValues.push(code);
+		count+=1;
+	}
 	
 	for(var i=0;i<chars.length;i++){
 		var code = getNumberCode(chars[i]);
-		leverIds.push(curLeverId++);
-		leverIds.push(curLeverId++);
-		leverIds.push(curLeverId++);
-		newLeverValues.push(0);
-		newLeverValues.push(number_max);
+		leverIds.push( (LEVER_ID_NUM_0 + count) );  
 		newLeverValues.push(code);
+		count+=1;
+	}
+	
+	//add empty spaces
+	if(chars.length<4){
+		
+		var spaces = 1;
+		if(chars.length==2){
+			spaces+=1;
+		}
+		if(chars.length==1){
+			spaces+=2;
+		}
+		
+		for(var i=0;i<spaces;i++){
+			var code = getNumberCode(" ");
+			leverIds.push( (LEVER_ID_NUM_0 + count) );  
+			newLeverValues.push(code);
+			count+=1;
+		}
+		
 	}
 	
 	//do i need to return leverIds and newLayerValues as arrays and set them outside the function again?
@@ -315,6 +351,8 @@ async function update() {
 			newLeverValues.push(achievement_drop);
 		}		
 	}
+	
+	
 		
 	// if no achievements
 	if (gain == true && achievementUnlocked == false) {
@@ -373,7 +411,8 @@ async function update() {
 		}
 		
 		if(achievementUnlocked==false){
-			//do i need to add anything here to render nothing in numbers?
+			var str = "xxxxx";
+			setNumberAchievement(leverIds, newLeverValues, str);
 		}
 		
 	}	
