@@ -6,7 +6,6 @@ var fs = require('fs')
  * [213,212,212,212,213,215,214,214,213,213,213,213,213,213,214,214,213,213,214,214,214,208,209,209,210,210]
  */
 async function getHistoricalHourlyETHPrices() {
-	return [213,212,212,212,213,215,214,214,213,213,213,213,213,213,214,214,213,213,214,214,214,208,209,209,210,210];
 	var url = "https://min-api.cryptocompare.com/data/v2/histohour?fsym=ETH&tsym=USD&limit=25"
 	
 	url += "&api_key" + process.env.CRYPTOCOMPARE_API_ETH_KEY
