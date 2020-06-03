@@ -282,6 +282,9 @@ async function update() {
 
 		scale += priceRange[3] * scaleSensitivity;
 		scale = Math.round(scale)
+		// Enforce absolute min/max token values
+		scale = Math.max(scale, 40);
+		scale = Math.min(scale, 500);
 
 		
 		var angle = mapValue(priceRange[2],-diff,diff, 360,-360) * (priceDataMult*rotationSensitivity);
@@ -293,10 +296,16 @@ async function update() {
 		// Position X
 		var x = priceDataMult * positionXSensitivity * priceRange[3];
 		x = Math.round(x);
+		// Enforce absolute min/max token values
+		x = Math.max(x, -2048);
+		x = Math.min(x, 2048);
 
 		// Position Y
 		var y = priceDataMult * positionYSensitivity * priceRange[3];
 		y = Math.round(y);
+		// Enforce absolute min/max token values
+		y = Math.max(y, -2048);
+		y = Math.min(y, 2048);
 
 		var layer = [scale, angle, x, y]
 
