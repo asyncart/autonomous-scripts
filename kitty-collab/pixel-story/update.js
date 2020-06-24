@@ -18,6 +18,8 @@ const KITTY_NOSHOT = MASTER_TOKEN_ID + 10;
 const KITTY_MIAOU = MASTER_TOKEN_ID + 11;
 const KITTY_CK = MASTER_TOKEN_ID + 12;
 
+const MAX_KITTY_DISTANCE_FOR_INTERACTION = 175;
+
 var contract;
 
 function convertRawData(dataRaw, kitty) {
@@ -130,61 +132,106 @@ async function update(providerURL, contractAddress, contractABI) {
 	var leverIds = [];
 	var newLeverValues = []; 
 
-	// Get position 
-	var kittyData = [];
+	// Get kitty data 
+	var kitties = [];
 
 	var kitty = await getPositionAndEmote(KITTY_CICERONE)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_BLACK_CAT)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_METACAT)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_CHESHIRE)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_PXLCAT)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_QT)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_BREADBREAKER)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_CONLAN)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_NOSHOT)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_MIAOU)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	kitty = await getPositionAndEmote(KITTY_CK)
 	if (kitty !== null) {
-		kittyData.push(kitty);
+		kitties.push(kitty);
 	}
 	
-	console.log(kittyData)
+	console.log(kitties)
 
 	// Determine pairs of kitties that are close enough to be valid (heart x heart, ETH/BTC x BTC/ETH)
+	var hasValidHeartCombo = false;
 
-	// Check if any pairs have hearts, if so then display the heart sun, otherwise normal sun
+	var usedKittySet = new Set();
 
 	// Check pairs for ETH/BTC and place an available sword between them
+	for (var i = 0; i < kitties.length; i++) {
+		var kittyA = kitties[i];
+		if (usedKittySet.has(kittyA.id)) {
+			continue;
+		}
+
+		for (var k = 0; k < kitties.length; k++) {
+			if (i == k) {
+				continue;
+			}
+
+			var kittyB = kitties[k];
+			if (usedKittySet.has(kittyB.id)) {
+				continue;
+			}
+
+			// check if kitties are within interaction zone
+			if (distanceForKitties(kittyA, kittyB) <= MAX_KITTY_DISTANCE_FOR_INTERACTION) {
+				if (checkForValidHearts(kittyA, kittyB)) {
+					usedKittySet.add(kittyA.id);
+					usedKittySet.add(kittyB.id);
+
+					console.log(kittyA.id + " is loving " + kittyB.id);
+
+					hasValidHeartCombo = true;
+					break;
+				} else if (checkForValidFight(kittyA, kittyB)) {
+					usedKittySet.add(kittyA.id);
+					usedKittySet.add(kittyB.id);
+
+					console.log(kittyA.id + " is fighting " + kittyB.id);
+					break;
+				}
+			}			
+		}
+	}
+
+	// Check if any pairs have hearts, if so then display the heart sun, otherwise normal sun
+	leverIds.push(0);
+	if (hasValidHeartCombo) {
+		newLeverValues.push(1);
+	} else {
+		newLeverValues.push(0);
+	}
 
 	console.log(leverIds);
 	console.log(newLeverValues);
@@ -193,6 +240,24 @@ async function update(providerURL, contractAddress, contractABI) {
 		leverIds : leverIds,
 		leverValues : newLeverValues
 	}
+}
+
+function distanceForKitties(kittyA, kittyB) {
+	var x1 = kittyA.x;
+	var y1 = kittyA.y;
+
+	var x2 = kittyB.x;
+	var y2 = kittyB.y;
+
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
+function checkForValidHearts(kittyA, kittyB) {
+	return ((kittyA.emote === EMOTE_BTC) && (kittyB.emote === EMOTE_BTC));
+}
+
+function checkForValidFight(kittyA, kittyB) {
+	return true;
 }
 
 // exports.update = update
