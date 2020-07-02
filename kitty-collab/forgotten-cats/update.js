@@ -59,9 +59,9 @@ async function update(providerURL, contractAddress, contractABI) {
 	    topics: [ topic ]
 	}
 
-	provider.getLogs(filter).then((result) => {
-		parseResult(result);
-	});
+	let result = await provider.getLogs(filter);
+
+	return await parseResult(result);
 }
 
 async function parseResult(result) {
