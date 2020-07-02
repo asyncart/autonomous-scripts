@@ -50,8 +50,6 @@ async function update(providerURL, contractAddress, contractABI) {
 
 	let fromBlock = latestBlock - (4 * 60 * 60 * 24); // 4 tx/min x 24 hours
 
-	fromBlock = latestBlock - 6000; // TODO remove
-
 	console.log("Fetching logs from " + fromBlock + " to " +  latestBlock);
 
 	let filter = {
