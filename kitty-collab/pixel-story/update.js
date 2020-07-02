@@ -4,7 +4,7 @@ const EMOTE_BTC = 1;
 const EMOTE_ETH = 5;
 const EMOTE_HEART = 8;
 
-const MASTER_TOKEN_ID = 663;
+const MASTER_TOKEN_ID = 280;
 
 const KITTY_CICERONE = MASTER_TOKEN_ID + 2;
 const KITTY_BLACK_CAT = MASTER_TOKEN_ID + 3;
