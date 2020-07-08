@@ -25,13 +25,15 @@ function update() {
 		newLeverValues.push(1); // Positive Apollo 100
 	} else if (date == 8) { // If it's the 8th day of the month...
 		if (hours <= 18) { // and before 6pm
-			newLeverValues.push(1); // Positive Apollo 100
+			newLeverValues.push(0); // Positive Apollo 50
+		} else {
+			newLeverValues.push(2); // Negative Apollo 0
 		}
 	}
 
 	// if there's no state pushed
 	if (newLeverValues.length == 0) {
-		newLeverValues.push(2); // Positive Apollo 0
+		newLeverValues.push(2); // Negative Apollo 0
 	}
 
 	// ensure that the visible toggle is turned on
