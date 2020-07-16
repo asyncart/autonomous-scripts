@@ -48,7 +48,7 @@ async function update(providerURL, contractAddress, contractABI) {
 
 	let topic = ethers.utils.id("ControlLeverUpdated(uint256,uint256,uint256[],int256[],int256[])");
 
-	let fromBlock = latestBlock - (4 * 60 * 60 * 24); // 4 tx/min x 24 hours
+	let fromBlock = latestBlock - (4 * 60 * 24); // 4 tx/min x 24 hours
 
 	console.log("Fetching logs from " + fromBlock + " to " +  latestBlock);
 
