@@ -91,7 +91,9 @@ async function update(util) {
 	var newLeverValues = [];
 
 	// Scrolling background	
-	var currentBackgroundScrollY = await util.getTokenValue(CONTROL_TOKEN_ADDRESS, CONTROL_TOKEN_ID, LEVER_ID_SCROLLING_BACKGROUND);
+	var currentBackgroundScrollY = await util.getControlTokenValue(CONTROL_TOKEN_ADDRESS, CONTROL_TOKEN_ID, LEVER_ID_SCROLLING_BACKGROUND);
+	console.log("Current background scroll Y = " + currentBackgroundScrollY)
+
 	var backgroundScrollMovement = 0;
 
 	var ethPercentChange = (currentEthPrice / firstEthPrice) - 1.0;
@@ -196,7 +198,9 @@ async function update(util) {
 	newLeverValues.push(newButterflyX);
 
 	// butterfly Y
-	var currentlyButterflyY = await util.getTokenValue(CONTROL_TOKEN_ADDRESS, CONTROL_TOKEN_ID, LEVER_ID_BUTTERFLY_Y);
+	var currentlyButterflyY = await util.getControlTokenValue(CONTROL_TOKEN_ADDRESS, CONTROL_TOKEN_ID, LEVER_ID_BUTTERFLY_Y);
+	console.log("Current Butterfly Y = " + currentlyButterflyY)
+
 	var butterflyMovement = 0;
 
 	var btcPercentChange = (currentBtcPrice / firstBtcPrice) - 1.0;
