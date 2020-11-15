@@ -208,13 +208,13 @@ async function update(util) {
 	console.log("BTC % change in 24 hours = " + btcPercentChange)
 
 	if (btcPercentChange > BTC_PERCENT_FOR_BIG_STEP) {
-		butterflyMovement = BTC_BIG_STEP_COUNT * BUTTERFLY_STEP;
-	} else if (btcPercentChange < -BTC_PERCENT_FOR_BIG_STEP) {
 		butterflyMovement = -BTC_BIG_STEP_COUNT * BUTTERFLY_STEP;
+	} else if (btcPercentChange < -BTC_PERCENT_FOR_BIG_STEP) {
+		butterflyMovement = BTC_BIG_STEP_COUNT * BUTTERFLY_STEP;
 	} else if (btcPercentChange > 0) {
-		butterflyMovement = BUTTERFLY_STEP;
-	} else if (btcPercentChange < 0) {
 		butterflyMovement = -BUTTERFLY_STEP;
+	} else if (btcPercentChange < 0) {
+		butterflyMovement = BUTTERFLY_STEP;
 	}
 
 	var newButterflyY = currentlyButterflyY + butterflyMovement;
