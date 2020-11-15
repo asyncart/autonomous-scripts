@@ -222,11 +222,6 @@ async function update(util) {
 	leverIds.push(LEVER_ID_BUTTERFLY_Y)
 	newLeverValues.push(newButterflyY);
 
-	console.log({
-		leverIds : leverIds,
-		leverValues : newLeverValues
-	})
-
 	return {
 		leverIds : leverIds,
 		leverValues : newLeverValues
