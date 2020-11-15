@@ -69,8 +69,12 @@ const LEVER_ID_BUTTERFLY_Y			= 8;
 const BASE_GAS_PRICE				= 100;
 
 // staging
-const CONTROL_TOKEN_ADDRESS			= "0x4f37310372dd39d451f7022ee587fa8b9f72d80b";
-const CONTROL_TOKEN_ID				= 2022;
+// const CONTROL_TOKEN_ADDRESS			= "0x4f37310372dd39d451f7022ee587fa8b9f72d80b";
+// const CONTROL_TOKEN_ID				= 2022;
+
+// production
+const CONTROL_TOKEN_ADDRESS			= "0xb6dae651468e9593e4581705a09c10a76ac1e0c8";
+const CONTROL_TOKEN_ID				= 808;
 
 async function update(util) {	
 	var ethPricesPerHourAscending = await util.getHistoricalHourlyPrices("ETH");
