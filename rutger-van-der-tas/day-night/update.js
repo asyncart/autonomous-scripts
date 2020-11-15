@@ -16,7 +16,7 @@ async function update(providerURL, contractAddress) {
 
 	// get the currently input latitude / longitude of "Day / Night Coordinates" holder
 
-	var tokenId = 90; // https://async.art/art/layer/0x6c424c25e9f1fff9642cb5b7750b0db7312c29ad-90 
+	var tokenId = 90; // https://async.art/art/layer/0xb6dae651468e9593e4581705a09c10a76ac1e0c8-90
 
 	var controlTokenValues = await contract.getControlToken(tokenId);
 
