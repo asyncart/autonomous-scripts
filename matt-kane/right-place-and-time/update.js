@@ -416,16 +416,7 @@ async function update() {
 			var str = "xxxxx";
 			setNumberAchievement(leverIds, newLeverValues, str);
 		}
-		
-	}	
-		
-
-	//console.log(mapValue(2,0,10,0,1));
-
-	console.log(leverIds);
-	console.log(newLeverValues)
-
-	// fs.writeFileSync("values.json", JSON.stringify(newLeverValues));
+	}
 
 	return {
 		leverIds : leverIds,
