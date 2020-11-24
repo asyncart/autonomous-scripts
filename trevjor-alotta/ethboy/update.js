@@ -161,7 +161,7 @@ async function update(util) {
 		var ruleMin = VITALIK_FACE_RULES[i][1];
 
 		if ((ethPercentChange <= ruleMax) && (ethPercentChange >= ruleMin)) {
-			newFacialExpression = VITALIK_FACE_RULES[2];
+			newFacialExpression = VITALIK_FACE_RULES[i][2];
 			break;
 		}
 	}
