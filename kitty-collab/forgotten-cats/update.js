@@ -26,7 +26,8 @@ const MAX_OPACITY = 100;
 const ALL_KITTIES = [KITTY_COSMIC_KITTY, KITTY_CATSQUERADE, KITTY_CAT_NAMED_CHIBS, KITTY_SWIRL, KITTY_JOHNNY, KITTY_BILLY,
 	KITTY_CHAMELEON, KITTY_KITTEH_CLAN, KITTY_FRANKEN_KITTY, KITTY_REZ_CATS, KITTY_CYBERCAT, KITTY_BATTLE_KITTIES, KITTY_FAUVES, KITTY_PURRRDOCK];
 
-let contract;
+let contractV1;
+let contractV2;
 
 function getKittyLeverID(kittyID) {
 	return kittyID - MASTER_TOKEN_ID - 1;	
@@ -40,40 +41,49 @@ function getKittyOpacity(kittyOpacities, kittyID) {
 	return parseInt(kittyOpacities[index].toString());
 }
 
-async function update(providerURL, contractAddress, contractABI) {	
+async function update(providerURL, contractAddressV1, contractAddressV2, contractABI) {	
 	let provider = new ethers.providers.JsonRpcProvider(providerURL)
-	contract = new ethers.Contract(contractAddress, contractABI, provider);
-	
+
 	var latestBlock = await provider.getBlockNumber();
 
-	let topic = ethers.utils.id("ControlLeverUpdated(uint256,uint256,uint256[],int256[],int256[])");
-
 	let fromBlock = latestBlock - (4 * 60 * 24); // 4 tx/min x 24 hours
-
+	
+	contractV1 = new ethers.Contract(contractAddressV1, contractABI, provider);
+	contractV2 = new ethers.Contract(contractAddressV2, contractABI, provider);
+	
+	let topicV1 = ethers.utils.id("ControlLeverUpdated(uint256,uint256,uint256[],int256[],int256[])");
 	console.log("Fetching logs from " + fromBlock + " to " +  latestBlock);
-
-	let filter = {
-	    address: contractAddress,
+	let filterV1 = {
+	    address: contractAddressV1,
 	    fromBlock: fromBlock,
 	    toBlock: latestBlock,
-	    topics: [ topic ]
+	    topics: [ topicV1 ]
 	}
+	let result_v1 = await provider.getLogs(filterV1);
 
-	let result = await provider.getLogs(filter);
+	let topicV2 = ethers.utils.id("ControlLeverUpdated(uint256,uint256,int256,uint256[],int256[],int256[])");
+	console.log("Fetching logs from " + fromBlock + " to " +  latestBlock);
+	let filterV2 = {
+	    address: contractAddressV2,
+	    fromBlock: fromBlock,
+	    toBlock: latestBlock,
+	    topics: [ topicV2 ]
+	}
+	let result_v2 = await provider.getLogs(filterV2);
 
-	return await parseResult(result);
+	return await parseResults(result_v1, result_v2);
 }
 
-async function parseResult(result) {
+async function parseResults(result_v1, result_v2) {
 	var leverIds = [];
 	var newLeverValues = []; 
 
 	var setPreviouslyUsedTokens = new Set();
 
-	for (var i = 0; i < result.length; i++) {    		
+	for (var i = 0; i < result_v1.length; i++) {    		
 		var decoded = ethers.utils.defaultAbiCoder.decode(
 			[ 'uint256', 'uint256', 'uint256[]', 'int256[]', 'int256[]' ],
-			result[i].data
+			result_v1[i].data
 		);
 
 		var tokenId = parseInt(decoded[0].toString()); // first parameter is the token id
@@ -82,6 +92,23 @@ async function parseResult(result) {
 
 		setPreviouslyUsedTokens.add(tokenId);
 	}
+
+	for (var i = 0; i < result_v2.length; i++) {    		
+		var decoded = ethers.utils.defaultAbiCoder.decode(
+			[ 'uint256', 'uint256', 'int256', 'uint256[]', 'int256[]', 'int256[]' ],
+			result_v2[i].data
+		);
+
+		var tokenId = parseInt(decoded[0].toString()); // first parameter is the token id
+
+		console.log(tokenId)
+
+		setPreviouslyUsedTokens.add(tokenId);
+	}
+
+	console.log(setPreviouslyUsedTokens)
+
+	return;
 
 	var kittiesNotMoved = [];
 	var kittiesThatMoved = [];    	
