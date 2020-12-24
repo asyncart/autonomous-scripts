@@ -108,8 +108,6 @@ async function parseResults(result_v1, result_v2) {
 
 	console.log(setPreviouslyUsedTokens)
 
-	return;
-
 	var kittiesNotMoved = [];
 	var kittiesThatMoved = [];    	
 
@@ -128,7 +126,7 @@ async function parseResults(result_v1, result_v2) {
 	}
 
 	// fetch all the kitty opacity values
-	var kittyOpacities = await contract.getControlToken(CONTROL_TOKEN);
+	var kittyOpacities = await contractV1.getControlToken(CONTROL_TOKEN); // control token is on v1
 
 	// for all the kitties that didn't move, decrease their opacity
 	for (var i = 0; i < kittiesNotMoved.length; i++) {
